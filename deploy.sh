@@ -1,17 +1,17 @@
 #!/bin/bash
+
 cd /var/www/phpapp || exit 1
 
-# Pull latest code from GitHub
-git reset --hard
-git pull origin main   # use 'master' if your repo uses master
+# Fix git safe directory
+git config --global --add safe.directory /var/www/phpapp
 
-# Set correct permissions
-sudo chown -R nginx:nginx /var/www/phpapp
-sudo chmod -R 755 /var/www/phpapp
+# Pull latest code
+git fetch origin
+git reset --hard origin/master
 
-# Restart web server (if using Nginx or Apache)
-sudo systemctl restart nginx   # For Nginx
-# sudo systemctl restart httpd  # For Apache
+# Restart Apache
+sudo systemctl restart httpd
+sudo systemctl restart nginx
 
 # Log deployment
-echo "PHP Deployment completed at $(date)" >> deploy.log
+echo "Deployment completed at $(date)" >> /var/www/phpapp/deploy.log
