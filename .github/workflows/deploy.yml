@@ -22,9 +22,9 @@ jobs:
 
       - name: Deploy to Server
         run: |
-          ssh ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} << 'EOF'
-            cd /var/www/phpapp
-            git fetch
-            git pull origin master
-            sudo systemctl restart nginx
-          EOF
+          ssh ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} "
+            cd /var/www/phpapp &&
+            git fetch &&
+            git pull origin master &&
+            sudo systemctl restart nginx"
+          
