@@ -27,4 +27,4 @@ jobs:
       - name: Run Ansible Playbook
         run: |
           ssh -o StrictHostKeyChecking=no ec2-user@${{ secrets.EC2_HOST }} \
-          "ansible-playbook /home/ec2-user/deploy.yml"
+          "ansible-playbook /root/var/www/phpapp/deploy.yml"
