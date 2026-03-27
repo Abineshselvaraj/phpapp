@@ -1,0 +1,16 @@
+- name: Deploy PHP App
+  hosts: localhost
+  become: yes
+
+  tasks:
+    - name: Pull latest code
+      git:
+        repo: https://github.com/Abineshselvaraj/phpapp.git
+        dest: /var/www/phpapp
+        version: master
+        force: yes
+
+    - name: Restart nginx
+      service:
+        name: nginx
+        state: restarted

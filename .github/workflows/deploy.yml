@@ -1,0 +1,30 @@
+name: Auto Deploy PHP App
+
+on:
+  push:
+    branches:
+      - master  
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+
+      - name: Setup SSH
+        uses: webfactory/ssh-agent@v0.7.1
+        with:
+          ssh-private-key: ${{ secrets.EC2_KEY }}
+
+      
+      - name: Copy Ansible Playbook to EC2
+        run: |
+          scp -o StrictHostKeyChecking=no deploy.yml ec2-user@${{ secrets.EC2_HOST }}:/home/ec2-user/deploy.yml
+
+      - name: Run Ansible Playbook
+        run: |
+          ssh -o StrictHostKeyChecking=no ec2-user@${{ secrets.EC2_HOST }} \
+          "ansible-playbook /home/ec2-user/deploy.yml"
