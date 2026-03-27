@@ -18,6 +18,6 @@ jobs:
 
       - name: Deploy via Ansible
         run: |
-          ssh -o StrictHostKeyChecking=no ec2-user@YOUR_EC2_IP "
+          ssh -o StrictHostKeyChecking=no ec2-user@${{ secrets.EC2_HOST }} "
             ansible-playbook /home/ec2-user/ansible/deploy.yml -i /home/ec2-user/ansible/inventory
           "
