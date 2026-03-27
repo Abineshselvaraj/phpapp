@@ -16,7 +16,7 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.EC2_KEY }}
 
-      - name: Deploy via Ansible
+      - name: Deploy via SSH
         run: |
           ssh -o StrictHostKeyChecking=no ec2-user@${{ secrets.EC2_HOST }} "
             ansible-playbook /home/ec2-user/ansible/deploy.yml -i /home/ec2-user/ansible/inventory
